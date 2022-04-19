@@ -1,0 +1,177 @@
+.nav{
+    background-color: rgb(255, 0, 0);
+    position: fixed;
+    width: 100%;
+    margin-top: -30px;
+    left: 0px;
+    min-height: 40px;
+    display: flex;
+    justify-content:space-between ;
+
+
+}
+
+.nav-list{
+    padding-left: 0;
+    margin: auto 15px;
+}
+
+.nav-item{
+    font-size: 30px;
+    color: white;
+    margin: auto 15px;
+    display: inline-block;
+}
+
+#mainTittle::first-letter{
+    font-size: 70px;
+   
+}
+h1#mainTittle{
+    position: relative;
+    /* top: 50px; */
+    left: 40%;
+    color: rgb(4, 0, 255);
+    font-size: 50px;
+}
+
+#toast{
+    position:fixed;
+    top: 40px;
+    right:32px;
+
+}
+
+.toast{
+    display: flex;
+    padding: 20px 0;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 2px;
+    border-left: 4px solid;
+    box-shadow: 0 5px 8px rgba(0, 0,0, 0.08);
+    max-width: 500px;
+    /* transform: translateX(calc(100% + 32px)); */
+    animation: slideInLeft ease 0.5s, fadeOut linear 1s 2.5s forwards;
+    /* làm mờ trong 1s, đợi 2s mới bắt đầu mờ, forwards để kết thúc ở điểm cuối, tránh vong lặp */
+
+}
+
+@keyframes slideInLeft{
+    from{
+        opacity: 0.2;
+        transform: translateX(calc(100% + 32px));
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+@keyframes fadeOut{
+    to{
+        opacity: 0;
+    }
+}
+
+.toast--success{
+    border-color: greenyellow;
+
+}
+.toast--success .toast__icon{
+    color: greenyellow
+
+}
+
+
+.toast__icon{
+    font-size: 24px;
+
+}
+
+.toast__icon, .toast__close{
+    padding: 0 16px;
+}
+.toast__body{
+    flex: 1;
+
+}
+.toast__title{
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+
+}
+
+.toast__msg{
+    font-size: 18px;
+    font-weight: 300;
+    color: #888;
+    margin-top: 5px;
+    line-height: 1.6;
+    /* line-height: khoảng cách giữa csc dòng */
+
+}
+.toast__close{
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.form-container{
+    max-width: 720px;
+    background-color: rgb(177, 177, 177);
+    padding: 20px;
+    margin: 20px auto 0 auto;
+    /* background-clip: content-box; */
+    
+}
+
+.form_row{
+    
+    margin: 15px;
+    display: flex;
+    padding: 10px 0;
+}
+
+.form_label{
+    min-width: 90px;
+}
+
+.form_input{
+    flex: 1; 
+
+}
+
+img.anh1{
+    border: 10px solid #333;
+    padding: 5px;
+    margin-top: 10px ;
+    margin-bottom: 10px;
+    margin: 10px;
+    
+}
+
+.anh1{
+    transition: opacity 0.5s ease;
+    transition-duration: 0.5s;
+    /* Safari */
+    -webkit-transition-duration: 0.5s; 
+    /* Mozilla Firefox */
+    -moz-transition-duration: 0.5s; 
+    /* Opera */
+    -o-transition-duration: 0.5s;
+    /* IE 9 */
+    -ms-transition-duration: 0.5s;
+}
+
+.anh1:hover{
+    opacity:0.7;
+
+    transform: scale(1.2);
+        -webkit-transform: scale(1.2); 
+        -moz-transform: scale(1.2); 
+        -o-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+}
