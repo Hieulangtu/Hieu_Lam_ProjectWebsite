@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Témat v předmětu</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+
+<body style="background-color: rgb(196, 251, 255);">
+
+<div  class="container-fluid p-5 bg-primary text-white text-center">
+  <h1 >Informace</h1>
+</div>
+  
+<div class="form-container">
+    <form action="" class="form">
+        <div class="form_row">
+           <label class="form_label" for="name">Searching : </label>
+           <input class="form_input" type="text" name="" id="name">
+        </div>
+
+    </form>
+
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+      <div id="root">
+
+      </div>
+  </div>
+</div>
+
+</body>
+
+<script type="text/babel">
+
+    function Card(props){
+        return(
+            <div className="card">
+            <div className="card-header">Basic Informations about students</div>
+            <div className="card-body">{props.children}</div>
+            <div className="card-footer">Footer</div>
+            </div>
+        )
+    }
+
+    function THead(props){
+        const columns = props.columnsNames.map(
+            (item, index) => (<th key={index}> {item}</th>)
+        );
+
+        return(
+            <thead>
+                <tr>
+                    {columns}
+                </tr>
+            </thead>
+        )
+    }
+
+    function TableRow(props){
+        const data = props.data
+        const columns = props.columnKeys.map(
+            (columnName, index) => (<td key={index}>{data[columnName]}</td>)
+        )
+        return(
+            <tr>
+                {columns}
+            </tr>
+        )
+    }
+
+    function TBody(props){
+        const data = props.data
+        const columnKeys = props.columnKeys
+        const rows = data.map(
+            (dataRow, index) => (<TableRow key={index} data={dataRow} columnKeys={columnKeys}/>)
+        )
+        return(
+            <tbody>
+                {rows}
+            </tbody>
+        )
+    }
+
+    function Table(props){
+        const data = props.data
+        const columnsNames = props.columnsNames
+        const columnKeys = props.columnKeys
+        return(
+            <table className="table">
+                <THead columnsNames= {columnsNames} />
+
+                <TBody columnKeys= {columnKeys} data={data} />
+            </table>
+        )
+    }
+
+    function EntityLarge(props){
+        const data = props.data
+        const columnsNames = props.columnsNames
+        const columnKeys = props.columnKeys
+        
+        const AddRow = () => {
+            const dataToAdd = {'name': 'Alena', 'surname': 'Válková', 'email': 'alena.valkova@email.com'}
+
+            if (props.onAdd){
+                props.onAdd(dataToAdd)
+            }
+        }
+
+        return(
+            <Card>
+                <Table data={data} columnsNames={columnsNames} columnKeys={columnKeys} />
+                
+            </Card>
+        )
+    }
+
+    function EntityStoryBook(props){
+        const data = [
+            {'name': 'John', 'surname': 'Newbie', 'email': 'johnnewbie@gmail.com'},
+            {'name': 'Emma', 'surname': 'Johanson', 'email': 'emma.johanson@gmail.com'}  
+        ]
+        const columnsNames = ['Jméno','Přijmení','Email','Obor','Učebna']
+        const columnKeys = ['name','surname','email','field','room']
+
+        return(
+            <EntityLarge
+                data={data}
+                columnsNames={columnsNames} 
+                columnKeys={columnKeys}
+                {...props} />
+        )
+    }
+
+    function Page(props){
+        const [data, setData] = React.useState([])
+        React.useEffect(
+            () => {
+                const dataFromServer = [
+                    {'name': 'Jiri', 'surname': 'Novák', 'email': 'jiri.novak@unob.cz','field': 'Matematika','room':'S5B-3'},
+                    {'name': 'Nguyen', 'surname': 'Long', 'email': 'nguyen.long@unob.cz','field': 'Kybernetická Bezpečnost','room':'S8-20'},
+                    {'name': 'David', 'surname': 'Veselý', 'email': 'david.vesely@unob.cz','field': 'zbraní a munice','room':'S9-24'},
+                    {'name': 'Iveta', 'surname': 'Kvitova', 'email': 'iveta.kvitova@unob.cz','field': 'Matematika','room':'S5B-3'},
+                    {'name': 'Khanicka', 'surname': 'Hopová', 'email': 'khanicka.hopova@unob.cz','field': 'vojenské robotiky','room':'S6-14'},
+                    {'name': 'Michael', 'surname': 'jackson', 'email': 'michael.jackson@unob.cz','field': 'zbraní a munice','room':'S9-24'},
+                    {'name': 'Lam', 'surname': 'Nguyen', 'email': 'lam.nguyen@unob.cz','field': 'Kybernetická Bezpečnost','room':'S8-20'}
+                ]
+
+                setData(dataFromServer)
+            }, [props.id]
+        )
+
+        const onAdd = (dataRow) => {
+            setData([...data, dataRow])
+        }
+
+        return(
+            <EntityStoryBook {...props} data={data} onAdd={onAdd} />
+        )
+    }
+
+    function App(props) {
+        return (
+            <Page id={1}/>
+                )
+    }
+</script>
+
+<script type="text/babel">
+    ReactDOM.render(
+      <App />,
+      document.getElementById('root')
+    );
+</script>
+
+</html>
